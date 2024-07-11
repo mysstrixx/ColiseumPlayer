@@ -1,3 +1,23 @@
+import sys
+import subprocess
+def check_and_install_requirements():
+    required_packages = [
+        'opencv-python',
+        'pyautogui',
+        'numpy',
+        'keyboard',
+        'mss',
+    ]
+    for package in required_packages:
+        try:
+            __import__(package)
+        except ImportError:
+            print(f"{package} is not installed. Installing now...")
+            subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+            print(f"{package} has been successfully installed.")
+# Call this function at the start of your script
+check_and_install_requirements()
+# Rest of your imports
 import cv2
 import pyautogui
 import numpy as np
