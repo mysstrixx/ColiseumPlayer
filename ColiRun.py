@@ -85,9 +85,9 @@ def human_like_click(loc, offset_y=0):
         return
     center_x = loc[0] + loc[2] // 2
     center_y = loc[1] + loc[3] // 2 + offset_y
-    pyautogui.moveTo(center_x, center_y, duration=uniform(0.2, 0.4))
+    pyautogui.moveTo(center_x, center_y, duration=uniform(0.1, 0.2))  # Faster mouse movement
     pyautogui.click()
-    sleep(uniform(0.1, 0.3))
+    sleep(uniform(0.05, 0.1))  # Shorter delay after clicking
 def check_and_click_fight_on(game_field):
     fight_on_loc = find_image(fight_on_button, game_field, confidence=0.7)
     if fight_on_loc:
@@ -260,21 +260,19 @@ def battle_loop(game_field):
                             human_like_click(target_loc, offset_y=60)
                         else:
                             print("Could not find target icon after clicking Scratch.")
-                if fallback_action_taken:
-                    print("Waiting for attack menu or not ready button...")
-                    timeout = time.time() + 30  # 30-second timeout
-                    while time.time() < timeout:
-                        attack_menu_loc = find_image(attack_menu_button, game_field, confidence=0.7)
-                        not_ready_loc = find_image(not_ready_button, game_field, confidence=0.7)
-                        if attack_menu_loc or not_ready_loc:
-                            print("Found attack menu or not ready button. Continuing...")
-                            break
-                        sleep(1)
-                    else:
-                        print("Timeout waiting for attack menu or not ready button. Ending script.")
-                        return
+                # New retry mechanism
+                retry_count = 0
+                while retry_count < 3:
+                    print(f"Checking for attack menu or not ready button (Attempt {retry_count + 1}/3)...")
+                    attack_menu_loc = find_image(attack_menu_button, game_field, confidence=0.7)
+                    not_ready_loc = find_image(not_ready_button, game_field, confidence=0.7)
+                    if attack_menu_loc or not_ready_loc:
+                        print("Found attack menu or not ready button. Continuing...")
+                        break
+                    sleep(uniform(0.5, 1.0))  # Short wait between attempts
+                    retry_count += 1
                 else:
-                    print("Could not execute fallback strategy. Ending script.")
+                    print("Could not find attack menu or not ready button after 3 attempts. Ending script.")
                     return
         else:
             print("Could not find attack menu button.")
@@ -284,14 +282,6 @@ def battle_loop(game_field):
             else:
                 print("Error: Could not find fight on button. Stopping script.")
                 return
-print("Press 'Esc' to exit the script at any time.")
-game_field = find_game_field()
-if game_field is None:
-    print("Unable to locate the game field. Exiting script.")
-else:
-    print(f"Game field found at: x={game_field[0]}, y={game_field[1]}, width={game_field[2]}, height={game_field[3]}")
-    battle_loop(game_field)
-print("Script ended.")
 print("Press 'Esc' to exit the script at any time.")
 game_field = find_game_field()
 if game_field is None:
