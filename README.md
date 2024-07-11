@@ -2,6 +2,8 @@ Requirements:
 
 python: https://www.python.org/downloads/
 
+probably tesseract: https://github.com/UB-Mannheim/tesseract/wiki
+
 Installation:
 
 Download and put folder anywhere
@@ -37,17 +39,6 @@ This is not an "auto-player" or a "hack".
 It is an automation script for low-mobility users or those who have wrist pain.
 
 Still, use at your own risk. It should not be detectable but I cannot guarantee it.
-
-
-You may need to manually edit the resolution, target locations, et cetera.
-
-I did my best to make it look for images and click them or near them,
-
-but it might need help finding those images if you resolution is different so be aware:
-
-if it can't find anything that's why.
-
-You need to put your window on the right side of the screen probably to make this version work.
 
 
 Important note:
