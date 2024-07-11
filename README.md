@@ -6,7 +6,7 @@ probably tesseract: https://github.com/UB-Mannheim/tesseract/wiki
 
 Installation:
 
-Download and put folder anywhere
+Download (green code button, download zip) and extract folder anywhere
 
 Open this folder, go to address bar, type cmd
 
