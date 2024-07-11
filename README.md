@@ -47,6 +47,8 @@ but it might need help finding those images if you resolution is different so be
 
 if it can't find anything that's why.
 
+You need to put your window on the right side of the screen probably to make this version work.
+
 
 Important note:
 
